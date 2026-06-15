@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.applyflow.ui.dashboard.DashboardFragment"
+        android:label="@string/dashboard_title"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboard_to_applicationList"
+            app:destination="@id/applicationListFragment" />
+        <action
+            android:id="@+id/action_dashboard_to_applicationDetail"
+            app:destination="@id/applicationDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/applicationListFragment"
+        android:name="com.applyflow.ui.applications.ApplicationListFragment"
+        android:label="@string/applications_title"
+        tools:layout="@layout/fragment_application_list">
+        <action
+            android:id="@+id/action_applicationList_to_applicationDetail"
+            app:destination="@id/applicationDetailFragment" />
+        <action
+            android:id="@+id/action_applicationList_to_addEditApplication"
+            app:destination="@id/addEditApplicationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/applicationDetailFragment"
+        android:name="com.applyflow.ui.applications.ApplicationDetailFragment"
+        android:label="@string/detail_title"
+        tools:layout="@layout/fragment_application_detail">
+        <argument
+            android:name="applicationId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_applicationDetail_to_addEditApplication"
+            app:destination="@id/addEditApplicationFragment" />
+        <action
+            android:id="@+id/action_applicationDetail_to_addEditEvent"
+            app:destination="@id/addEditEventFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEditApplicationFragment"
+        android:name="com.applyflow.ui.addedit.AddEditApplicationFragment"
+        android:label="@string/add_application_title"
+        tools:layout="@layout/fragment_add_edit_application">
+        <argument
+            android:name="applicationId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEditEventFragment"
+        android:name="com.applyflow.ui.addedit.AddEditEventFragment"
+        android:label="@string/add_event_title"
+        tools:layout="@layout/fragment_add_edit_event">
+        <argument
+            android:name="applicationId"
+            app:argType="integer" />
+        <argument
+            android:name="eventId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+</navigation>

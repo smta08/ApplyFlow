@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="status_applied">#1976D2</color>
+    <color name="status_phone_screen">#7B1FA2</color>
+    <color name="status_interview">#F57C00</color>
+    <color name="status_final_round">#E64A19</color>
+    <color name="status_offer_received">#388E3C</color>
+    <color name="status_rejected">#616161</color>
+</resources>

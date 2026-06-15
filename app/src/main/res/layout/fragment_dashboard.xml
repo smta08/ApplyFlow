@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_counts_header"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/StatusCard"
+                app:cardBackgroundColor="@color/status_applied">
+
+                <include layout="@layout/view_status_card_content"
+                    android:id="@+id/card_applied" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/StatusCard"
+                app:cardBackgroundColor="@color/status_phone_screen">
+
+                <include layout="@layout/view_status_card_content"
+                    android:id="@+id/card_phone_screen" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/StatusCard"
+                app:cardBackgroundColor="@color/status_interview">
+
+                <include layout="@layout/view_status_card_content"
+                    android:id="@+id/card_interview" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/StatusCard"
+                app:cardBackgroundColor="@color/status_final_round">
+
+                <include layout="@layout/view_status_card_content"
+                    android:id="@+id/card_final_round" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/StatusCard"
+                app:cardBackgroundColor="@color/status_offer_received">
+
+                <include layout="@layout/view_status_card_content"
+                    android:id="@+id/card_offer_received" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/StatusCard"
+                app:cardBackgroundColor="@color/status_rejected">
+
+                <include layout="@layout/view_status_card_content"
+                    android:id="@+id/card_rejected" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upcoming_events_header"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_upcoming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false" />
+
+        <TextView
+            android:id="@+id/text_no_upcoming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_upcoming_events"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:paddingVertical="16dp"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_view_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/view_all_applications" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

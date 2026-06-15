@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">ApplyFlow</string>
+
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <string name="dashboard_title">Dashboard</string>
+    <string name="status_counts_header">Applications by status</string>
+    <string name="upcoming_events_header">Upcoming events (next 7 days)</string>
+    <string name="no_upcoming_events">No upcoming events in the next 7 days.</string>
+    <string name="view_all_applications">View all applications</string>
+
+    <string name="applications_title">Applications</string>
+    <string name="filter_all">All</string>
+    <string name="empty_applications">No applications yet. Tap + to add one.</string>
+    <string name="add_application">Add application</string>
+
+    <string name="detail_title">Application</string>
+    <string name="label_link">Link</string>
+    <string name="label_date_applied">Date applied</string>
+    <string name="label_status">Status</string>
+    <string name="label_notes">Notes</string>
+    <string name="label_events">Events</string>
+    <string name="no_events">No events yet. Tap + to add one.</string>
+    <string name="add_event">Add event</string>
+    <string name="not_set">Not set</string>
+    <string name="confirm_delete_application_title">Delete application?</string>
+    <string name="confirm_delete_application_message">This will permanently delete the application and all of its events. This cannot be undone.</string>
+    <string name="confirm_delete_event_title">Delete event?</string>
+    <string name="confirm_delete_event_message">This will permanently delete this event and cancel its reminder.</string>
+
+    <string name="add_application_title">Add application</string>
+    <string name="edit_application_title">Edit application</string>
+    <string name="hint_company">Company *</string>
+    <string name="hint_role">Role *</string>
+    <string name="hint_link">Link (optional)</string>
+    <string name="hint_notes">Notes (optional)</string>
+    <string name="pick_date">Pick date</string>
+    <string name="error_company_required">Company is required</string>
+    <string name="error_role_required">Role is required</string>
+
+    <string name="add_event_title">Add event</string>
+    <string name="edit_event_title">Edit event</string>
+    <string name="hint_event_type">Type</string>
+    <string name="hint_event_description">Description (optional)</string>
+    <string name="hint_date_time">Date &amp; time</string>
+    <string name="pick_date_time">Pick date &amp; time</string>
+    <string name="error_date_time_required">Date &amp; time is required</string>
+    <string name="warn_event_in_past">Event is in the past — saved, but no reminder will be scheduled.</string>
+
+    <string name="status_applied">Applied</string>
+    <string name="status_phone_screen">Phone Screen</string>
+    <string name="status_interview">Interview</string>
+    <string name="status_final_round">Final Round</string>
+    <string name="status_offer_received">Offer Received</string>
+    <string name="status_rejected">Rejected</string>
+
+    <string name="event_type_interview">Interview</string>
+    <string name="event_type_follow_up">Follow Up</string>
+
+    <string name="notification_channel_name">Event Reminders</string>
+    <string name="notification_channel_description">Reminders for upcoming interviews and follow-ups</string>
+    <string name="notification_title_interview">Interview reminder</string>
+    <string name="notification_title_follow_up">Follow-up reminder</string>
+
+    <string name="cd_empty_icon">Empty list icon</string>
+    <string name="cd_edit_event">Edit event</string>
+    <string name="cd_delete_event">Delete event</string>
+</resources>
