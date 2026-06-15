@@ -72,4 +72,16 @@
             android:defaultValue="-1" />
     </fragment>
 
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.applyflow.ui.statistics.StatisticsFragment"
+        android:label="@string/statistics_title"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.applyflow.ui.settings.SettingsFragment"
+        android:label="@string/settings_title"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>

@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.applyflow.data.dao.ApplicationDao;
 import com.applyflow.data.db.AppDatabase;
 import com.applyflow.data.db.ApplicationEntity;
+import com.applyflow.util.Constants;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -36,6 +37,23 @@ public class ApplicationRepository {
         return applicationDao.getByStatusLive(status);
     }
 
+    public LiveData<List<ApplicationEntity>> getSorted(int sortMode) {
+        switch (sortMode) {
+            case Constants.SORT_DATE_APPLIED:
+                return applicationDao.getAllByDateAppliedLive();
+            case Constants.SORT_COMPANY:
+                return applicationDao.getAllByCompanyLive();
+            case Constants.SORT_STATUS:
+                return applicationDao.getAllByStatusOrderedLive();
+            default:
+                return applicationDao.getAllLive();
+        }
+    }
+
+    public LiveData<List<ApplicationEntity>> getNeedsFollowUp(String status, String cutoffDate) {
+        return applicationDao.getNeedsFollowUpLive(status, cutoffDate);
+    }
+
     public LiveData<ApplicationEntity> getById(int id) {
         return applicationDao.getByIdLive(id);
     }
@@ -60,6 +78,13 @@ public class ApplicationRepository {
         executor.execute(() -> {
             ApplicationEntity entity = applicationDao.getByIdSync(id);
             mainHandler.post(() -> callback.onLoaded(entity));
+        });
+    }
+
+    public void loadAll(OnLoadedCallback<List<ApplicationEntity>> callback) {
+        executor.execute(() -> {
+            List<ApplicationEntity> all = applicationDao.getAllSync();
+            mainHandler.post(() -> callback.onLoaded(all));
         });
     }
 }

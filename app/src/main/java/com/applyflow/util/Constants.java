@@ -46,4 +46,26 @@ public final class Constants {
     };
 
     public static final int UPCOMING_WINDOW_DAYS = 7;
+
+    public static final String PREFS_NAME = "applyflow_prefs";
+    public static final String KEY_THEME_MODE = "theme_mode";
+    public static final String KEY_FOLLOWUP_DAYS = "followup_days";
+
+    public static final int THEME_SYSTEM = 0;
+    public static final int THEME_LIGHT = 1;
+    public static final int THEME_DARK = 2;
+
+    public static final int DEFAULT_FOLLOWUP_DAYS = 7;
+    public static final int[] FOLLOWUP_DAY_OPTIONS = {3, 7, 14};
+
+    public static final int SORT_RECENT = 0;
+    public static final int SORT_DATE_APPLIED = 1;
+    public static final int SORT_COMPANY = 2;
+    public static final int SORT_STATUS = 3;
+
+    public static final int PRIORITY_NORMAL = 0;
+    public static final int PRIORITY_HIGH = 1;
+    public static final int PRIORITY_TOP = 2;
+
+    public static final int[] PRIORITIES = {PRIORITY_NORMAL, PRIORITY_HIGH, PRIORITY_TOP};
 }

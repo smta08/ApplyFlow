@@ -1,6 +1,8 @@
 package com.applyflow.ui.applications;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,11 +30,14 @@ import com.applyflow.data.db.ApplicationEntity;
 import com.applyflow.data.db.EventEntity;
 import com.applyflow.util.Constants;
 import com.applyflow.util.DateUtils;
+import com.applyflow.util.PriorityUtils;
 import com.applyflow.util.StatusUtils;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ApplicationDetailFragment extends Fragment {
 
@@ -44,14 +49,30 @@ public class ApplicationDetailFragment extends Fragment {
     private ApplicationEntity currentApp;
     private List<EventEntity> currentEvents;
 
+    private TextView textMonogram;
     private TextView textCompany;
     private TextView textRole;
     private TextView textLink;
+    private TextView textLocation;
+    private TextView textSalary;
+    private TextView textSource;
     private TextView textDateApplied;
+    private TextView textPriority;
+    private TextView textContactName;
+    private TextView textContactEmail;
+    private TextView textJobDescription;
     private TextView textNotes;
     private Spinner spinnerStatus;
     private TextView textNoEvents;
     private RecyclerView recyclerEvents;
+
+    private View rowLink;
+    private View rowLocation;
+    private View rowSalary;
+    private View rowSource;
+    private View cardContact;
+    private View cardJob;
+    private View cardNotes;
 
     @Nullable
     @Override
@@ -69,14 +90,30 @@ public class ApplicationDetailFragment extends Fragment {
                 ? getArguments().getInt(Constants.ARG_APPLICATION_ID, Constants.NEW_ID)
                 : Constants.NEW_ID;
 
+        textMonogram = view.findViewById(R.id.text_monogram);
         textCompany = view.findViewById(R.id.text_company);
         textRole = view.findViewById(R.id.text_role);
         textLink = view.findViewById(R.id.text_link);
+        textLocation = view.findViewById(R.id.text_location);
+        textSalary = view.findViewById(R.id.text_salary);
+        textSource = view.findViewById(R.id.text_source);
         textDateApplied = view.findViewById(R.id.text_date_applied);
+        textPriority = view.findViewById(R.id.text_priority);
+        textContactName = view.findViewById(R.id.text_contact_name);
+        textContactEmail = view.findViewById(R.id.text_contact_email);
+        textJobDescription = view.findViewById(R.id.text_job_description);
         textNotes = view.findViewById(R.id.text_notes);
         spinnerStatus = view.findViewById(R.id.spinner_status);
         textNoEvents = view.findViewById(R.id.text_no_events);
         recyclerEvents = view.findViewById(R.id.recycler_events);
+
+        rowLink = view.findViewById(R.id.row_link);
+        rowLocation = view.findViewById(R.id.row_location);
+        rowSalary = view.findViewById(R.id.row_salary);
+        rowSource = view.findViewById(R.id.row_source);
+        cardContact = view.findViewById(R.id.card_contact);
+        cardJob = view.findViewById(R.id.card_job);
+        cardNotes = view.findViewById(R.id.card_notes);
 
         setupStatusSpinner();
         setupEvents();
@@ -182,22 +219,52 @@ public class ApplicationDetailFragment extends Fragment {
         textCompany.setText(app.company);
         textRole.setText(app.role);
 
-        if (app.link == null || app.link.trim().isEmpty()) {
-            textLink.setText(R.string.not_set);
-        } else {
-            textLink.setText(app.link);
-        }
+        textMonogram.setText(monogramOf(app.company));
+        textMonogram.setBackgroundTintList(ColorStateList.valueOf(MaterialColors.getColor(
+                textMonogram, com.google.android.material.R.attr.colorPrimaryContainer)));
+        textMonogram.setTextColor(MaterialColors.getColor(
+                textMonogram, com.google.android.material.R.attr.colorOnPrimaryContainer));
+
+        bindRow(rowLink, textLink, app.link);
+        bindRow(rowLocation, textLocation, app.location);
+        bindRow(rowSalary, textSalary, app.salary);
+        bindRow(rowSource, textSource, app.source);
 
         String dateApplied = DateUtils.displayDate(app.dateApplied);
         textDateApplied.setText(dateApplied != null ? dateApplied : getString(R.string.not_set));
+        textPriority.setText(PriorityUtils.priorityLabel(requireContext(), app.priority));
 
-        if (app.notes == null || app.notes.trim().isEmpty()) {
-            textNotes.setText(R.string.not_set);
-        } else {
-            textNotes.setText(app.notes);
-        }
+        boolean hasName = !TextUtils.isEmpty(app.contactName);
+        boolean hasEmail = !TextUtils.isEmpty(app.contactEmail);
+        textContactName.setText(app.contactName);
+        textContactName.setVisibility(hasName ? View.VISIBLE : View.GONE);
+        textContactEmail.setText(app.contactEmail);
+        textContactEmail.setVisibility(hasEmail ? View.VISIBLE : View.GONE);
+        cardContact.setVisibility(hasName || hasEmail ? View.VISIBLE : View.GONE);
+
+        textJobDescription.setText(app.jobDescription);
+        cardJob.setVisibility(TextUtils.isEmpty(app.jobDescription) ? View.GONE : View.VISIBLE);
+
+        textNotes.setText(app.notes);
+        cardNotes.setVisibility(TextUtils.isEmpty(app.notes) ? View.GONE : View.VISIBLE);
 
         spinnerStatus.setSelection(StatusUtils.statusIndex(app.status));
+    }
+
+    private void bindRow(View row, TextView value, String text) {
+        if (TextUtils.isEmpty(text)) {
+            row.setVisibility(View.GONE);
+        } else {
+            row.setVisibility(View.VISIBLE);
+            value.setText(text);
+        }
+    }
+
+    private String monogramOf(String company) {
+        if (company == null || company.trim().isEmpty()) {
+            return "?";
+        }
+        return company.trim().substring(0, 1).toUpperCase(Locale.getDefault());
     }
 
     private void confirmDeleteApplication() {

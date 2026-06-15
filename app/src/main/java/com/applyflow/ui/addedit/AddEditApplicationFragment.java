@@ -21,6 +21,7 @@ import com.applyflow.data.db.ApplicationEntity;
 import com.applyflow.ui.applications.ApplicationViewModel;
 import com.applyflow.util.Constants;
 import com.applyflow.util.DateUtils;
+import com.applyflow.util.PriorityUtils;
 import com.applyflow.util.StatusUtils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,8 +44,15 @@ public class AddEditApplicationFragment extends Fragment {
     private TextInputEditText inputCompany;
     private TextInputEditText inputRole;
     private TextInputEditText inputLink;
+    private TextInputEditText inputLocation;
+    private TextInputEditText inputSalary;
+    private TextInputEditText inputSource;
+    private TextInputEditText inputContactName;
+    private TextInputEditText inputContactEmail;
+    private TextInputEditText inputJobDescription;
     private TextInputEditText inputNotes;
     private Spinner spinnerStatus;
+    private Spinner spinnerPriority;
     private MaterialButton buttonPickDate;
 
     @Nullable
@@ -70,14 +78,26 @@ public class AddEditApplicationFragment extends Fragment {
         inputCompany = view.findViewById(R.id.input_company);
         inputRole = view.findViewById(R.id.input_role);
         inputLink = view.findViewById(R.id.input_link);
+        inputLocation = view.findViewById(R.id.input_location);
+        inputSalary = view.findViewById(R.id.input_salary);
+        inputSource = view.findViewById(R.id.input_source);
+        inputContactName = view.findViewById(R.id.input_contact_name);
+        inputContactEmail = view.findViewById(R.id.input_contact_email);
+        inputJobDescription = view.findViewById(R.id.input_job_description);
         inputNotes = view.findViewById(R.id.input_notes);
         spinnerStatus = view.findViewById(R.id.spinner_status);
+        spinnerPriority = view.findViewById(R.id.spinner_priority);
         buttonPickDate = view.findViewById(R.id.button_pick_date);
 
         ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_item, StatusUtils.allStatusLabels(requireContext()));
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerStatus.setAdapter(statusAdapter);
+
+        ArrayAdapter<String> priorityAdapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_spinner_item, PriorityUtils.allPriorityLabels(requireContext()));
+        priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPriority.setAdapter(priorityAdapter);
 
         buttonPickDate.setOnClickListener(v -> showDatePicker());
 
@@ -99,8 +119,15 @@ public class AddEditApplicationFragment extends Fragment {
         inputCompany.setText(app.company);
         inputRole.setText(app.role);
         inputLink.setText(app.link);
+        inputLocation.setText(app.location);
+        inputSalary.setText(app.salary);
+        inputSource.setText(app.source);
+        inputContactName.setText(app.contactName);
+        inputContactEmail.setText(app.contactEmail);
+        inputJobDescription.setText(app.jobDescription);
         inputNotes.setText(app.notes);
         spinnerStatus.setSelection(StatusUtils.statusIndex(app.status));
+        spinnerPriority.setSelection(PriorityUtils.indexOf(app.priority));
         selectedDateApplied = app.dateApplied;
         updateDateButton();
     }
@@ -138,20 +165,34 @@ public class AddEditApplicationFragment extends Fragment {
             return;
         }
 
-        String link = emptyToNull(textOf(inputLink));
-        String notes = emptyToNull(textOf(inputNotes));
         String status = Constants.STATUSES[spinnerStatus.getSelectedItemPosition()];
+        int priority = Constants.PRIORITIES[spinnerPriority.getSelectedItemPosition()];
+
+        ApplicationEntity entity;
+        if (editing && editingApp != null) {
+            entity = editingApp;
+        } else {
+            entity = new ApplicationEntity(company, role, null, status, null, null,
+                    DateUtils.nowCreatedAt());
+        }
+        entity.company = company;
+        entity.role = role;
+        entity.link = emptyToNull(textOf(inputLink));
+        entity.location = emptyToNull(textOf(inputLocation));
+        entity.salary = emptyToNull(textOf(inputSalary));
+        entity.source = emptyToNull(textOf(inputSource));
+        entity.contactName = emptyToNull(textOf(inputContactName));
+        entity.contactEmail = emptyToNull(textOf(inputContactEmail));
+        entity.jobDescription = emptyToNull(textOf(inputJobDescription));
+        entity.notes = emptyToNull(textOf(inputNotes));
+        entity.status = status;
+        entity.priority = priority;
+        entity.dateApplied = selectedDateApplied;
 
         if (editing && editingApp != null) {
-            editingApp.company = company;
-            editingApp.role = role;
-            editingApp.link = link;
-            editingApp.status = status;
-            editingApp.notes = notes;
-            editingApp.dateApplied = selectedDateApplied;
-            viewModel.updateApplication(editingApp);
+            viewModel.updateApplication(entity);
         } else {
-            viewModel.saveNewApplication(company, role, link, status, notes, selectedDateApplied);
+            viewModel.insertApplication(entity);
         }
         navController.popBackStack();
     }

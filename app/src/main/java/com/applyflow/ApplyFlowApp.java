@@ -6,12 +6,14 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 import com.applyflow.util.Constants;
+import com.applyflow.util.ThemeManager;
 
 public class ApplyFlowApp extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+        ThemeManager.applySavedMode(this);
         createNotificationChannel();
     }
 

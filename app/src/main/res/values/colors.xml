@@ -3,10 +3,36 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="md_primary">#4C5BD4</color>
+    <color name="md_on_primary">#FFFFFF</color>
+    <color name="md_primary_container">#E0E0FF</color>
+    <color name="md_on_primary_container">#10134B</color>
+    <color name="md_secondary">#006B6E</color>
+    <color name="md_on_secondary">#FFFFFF</color>
+    <color name="md_secondary_container">#9CF1F4</color>
+    <color name="md_on_secondary_container">#002021</color>
+    <color name="md_tertiary">#7B5800</color>
+    <color name="md_on_tertiary">#FFFFFF</color>
+    <color name="md_tertiary_container">#FFDEA6</color>
+    <color name="md_on_tertiary_container">#271900</color>
+    <color name="md_background">#FBF8FF</color>
+    <color name="md_on_background">#1B1B21</color>
+    <color name="md_surface">#FBF8FF</color>
+    <color name="md_on_surface">#1B1B21</color>
+    <color name="md_surface_variant">#E3E1EC</color>
+    <color name="md_on_surface_variant">#46464F</color>
+    <color name="md_surface_container">#F1ECF4</color>
+    <color name="md_surface_container_high">#EBE6EF</color>
+    <color name="md_outline">#777680</color>
+    <color name="md_outline_variant">#C7C5D0</color>
+    <color name="md_error">#BA1A1A</color>
+    <color name="md_on_error">#FFFFFF</color>
+
     <color name="status_applied">#1976D2</color>
     <color name="status_phone_screen">#7B1FA2</color>
     <color name="status_interview">#F57C00</color>
     <color name="status_final_round">#E64A19</color>
     <color name="status_offer_received">#388E3C</color>
     <color name="status_rejected">#616161</color>
+    <color name="status_on_chip">#FFFFFF</color>
 </resources>

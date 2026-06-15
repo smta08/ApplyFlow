@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.applyflow.data.db.ApplicationEntity;
 import com.applyflow.data.db.EventEntity;
@@ -15,17 +15,22 @@ import com.applyflow.data.repository.ApplicationRepository;
 import com.applyflow.data.repository.EventRepository;
 import com.applyflow.notifications.NotificationHelper;
 import com.applyflow.util.Constants;
-import com.applyflow.util.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ApplicationViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<String> filter = new MutableLiveData<>(null);
-    private final LiveData<List<ApplicationEntity>> applications;
-
     private final ApplicationRepository applicationRepository;
     private final EventRepository eventRepository;
+
+    private final MutableLiveData<String> filter = new MutableLiveData<>(null);
+    private final MutableLiveData<String> query = new MutableLiveData<>("");
+    private int sortMode = Constants.SORT_RECENT;
+
+    private LiveData<List<ApplicationEntity>> base;
+    private final MediatorLiveData<List<ApplicationEntity>> applications = new MediatorLiveData<>();
 
     private LiveData<ApplicationEntity> applicationLive;
     private int applicationLiveId = Constants.NEW_ID;
@@ -37,12 +42,10 @@ public class ApplicationViewModel extends AndroidViewModel {
         applicationRepository = new ApplicationRepository(application);
         eventRepository = new EventRepository(application);
 
-        applications = Transformations.switchMap(filter, status -> {
-            if (status == null) {
-                return applicationRepository.getAll();
-            }
-            return applicationRepository.getByStatus(status);
-        });
+        base = applicationRepository.getSorted(sortMode);
+        applications.addSource(base, list -> recompute());
+        applications.addSource(filter, f -> recompute());
+        applications.addSource(query, q -> recompute());
     }
 
     public LiveData<List<ApplicationEntity>> getApplications() {
@@ -51,6 +54,51 @@ public class ApplicationViewModel extends AndroidViewModel {
 
     public void setFilter(@Nullable String status) {
         filter.setValue(status);
+    }
+
+    public void setQuery(@Nullable String text) {
+        query.setValue(text == null ? "" : text);
+    }
+
+    public void setSortMode(int mode) {
+        if (mode == sortMode) {
+            return;
+        }
+        applications.removeSource(base);
+        sortMode = mode;
+        base = applicationRepository.getSorted(sortMode);
+        applications.addSource(base, list -> recompute());
+    }
+
+    public int getSortMode() {
+        return sortMode;
+    }
+
+    private void recompute() {
+        applications.setValue(applyFilters(base.getValue()));
+    }
+
+    private List<ApplicationEntity> applyFilters(List<ApplicationEntity> source) {
+        List<ApplicationEntity> result = new ArrayList<>();
+        if (source == null) {
+            return result;
+        }
+        String status = filter.getValue();
+        String q = query.getValue();
+        String needle = q == null ? "" : q.trim().toLowerCase(Locale.getDefault());
+        for (ApplicationEntity app : source) {
+            if (status != null && !status.equals(app.status)) {
+                continue;
+            }
+            if (!needle.isEmpty()) {
+                String haystack = (app.company + " " + app.role).toLowerCase(Locale.getDefault());
+                if (!haystack.contains(needle)) {
+                    continue;
+                }
+            }
+            result.add(app);
+        }
+        return result;
     }
 
     public LiveData<ApplicationEntity> getApplication(int id) {
@@ -77,10 +125,7 @@ public class ApplicationViewModel extends AndroidViewModel {
         applicationRepository.loadById(id, callback);
     }
 
-    public void saveNewApplication(String company, String role, @Nullable String link,
-                                   String status, @Nullable String notes, @Nullable String dateApplied) {
-        ApplicationEntity entity = new ApplicationEntity(
-                company, role, link, status, notes, dateApplied, DateUtils.nowCreatedAt());
+    public void insertApplication(ApplicationEntity entity) {
         applicationRepository.insert(entity);
     }
 

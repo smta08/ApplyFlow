@@ -29,12 +29,28 @@ public interface ApplicationDao {
     @Query("SELECT * FROM applications ORDER BY created_at DESC")
     LiveData<List<ApplicationEntity>> getAllLive();
 
+    @Query("SELECT * FROM applications ORDER BY date_applied IS NULL, date_applied DESC, created_at DESC")
+    LiveData<List<ApplicationEntity>> getAllByDateAppliedLive();
+
+    @Query("SELECT * FROM applications ORDER BY company COLLATE NOCASE ASC")
+    LiveData<List<ApplicationEntity>> getAllByCompanyLive();
+
+    @Query("SELECT * FROM applications ORDER BY status ASC, created_at DESC")
+    LiveData<List<ApplicationEntity>> getAllByStatusOrderedLive();
+
     @Query("SELECT * FROM applications WHERE status = :status ORDER BY created_at DESC")
     LiveData<List<ApplicationEntity>> getByStatusLive(String status);
+
+    @Query("SELECT * FROM applications WHERE status = :status AND date_applied IS NOT NULL "
+            + "AND date_applied <= :cutoffDate ORDER BY date_applied ASC")
+    LiveData<List<ApplicationEntity>> getNeedsFollowUpLive(String status, String cutoffDate);
 
     @Query("SELECT * FROM applications WHERE id = :id")
     LiveData<ApplicationEntity> getByIdLive(int id);
 
     @Query("SELECT * FROM applications WHERE id = :id")
     ApplicationEntity getByIdSync(int id);
+
+    @Query("SELECT * FROM applications ORDER BY created_at DESC")
+    List<ApplicationEntity> getAllSync();
 }

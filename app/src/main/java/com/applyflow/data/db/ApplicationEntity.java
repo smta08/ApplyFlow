@@ -41,6 +41,33 @@ public class ApplicationEntity {
     @ColumnInfo(name = "created_at")
     public String createdAt;
 
+    @Nullable
+    @ColumnInfo(name = "location")
+    public String location;
+
+    @Nullable
+    @ColumnInfo(name = "salary")
+    public String salary;
+
+    @Nullable
+    @ColumnInfo(name = "source")
+    public String source;
+
+    @Nullable
+    @ColumnInfo(name = "contact_name")
+    public String contactName;
+
+    @Nullable
+    @ColumnInfo(name = "contact_email")
+    public String contactEmail;
+
+    @Nullable
+    @ColumnInfo(name = "job_description")
+    public String jobDescription;
+
+    @ColumnInfo(name = "priority", defaultValue = "0")
+    public int priority;
+
     public ApplicationEntity(@NonNull String company,
                              @NonNull String role,
                              @Nullable String link,

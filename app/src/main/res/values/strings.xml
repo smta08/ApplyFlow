@@ -68,4 +68,64 @@
     <string name="cd_empty_icon">Empty list icon</string>
     <string name="cd_edit_event">Edit event</string>
     <string name="cd_delete_event">Delete event</string>
+
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_applications">Applications</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="appearance_section">Appearance</string>
+    <string name="theme_label">Theme</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="followup_section">Follow-up reminders</string>
+    <string name="followup_label">Nudge me to follow up after</string>
+    <string name="followup_3">3 days</string>
+    <string name="followup_7">7 days</string>
+    <string name="followup_14">14 days</string>
+    <string name="data_section">Data</string>
+    <string name="export_csv">Export applications to CSV</string>
+    <string name="export_empty">Nothing to export yet.</string>
+
+    <string name="dashboard_total">Total applications</string>
+    <string name="pipeline_header">Pipeline</string>
+    <string name="needs_attention_header">Time to follow up</string>
+
+    <string name="statistics_title">Statistics</string>
+    <string name="stat_total">Total</string>
+    <string name="stat_response_rate">Response rate</string>
+    <string name="stat_interview_rate">Interview rate</string>
+    <string name="stat_offer_rate">Offer rate</string>
+    <string name="stat_avg_days">Avg days since applied</string>
+    <string name="stat_breakdown_header">By status</string>
+    <string name="stat_over_time_header">Applications over time</string>
+    <string name="stat_empty">Add applications to see your statistics.</string>
+
+    <string name="action_search">Search</string>
+    <string name="action_sort">Sort</string>
+    <string name="search_hint">Search company or role</string>
+    <string name="sort_title">Sort by</string>
+    <string name="sort_recent">Recently added</string>
+    <string name="sort_date_applied">Date applied</string>
+    <string name="sort_company">Company (A–Z)</string>
+    <string name="sort_status">Status</string>
+
+    <string name="label_location">Location</string>
+    <string name="label_salary">Salary</string>
+    <string name="label_source">Source</string>
+    <string name="label_contact">Contact</string>
+    <string name="label_job_description">Job description</string>
+    <string name="label_priority">Priority</string>
+    <string name="section_details">Details</string>
+    <string name="hint_location">Location (optional)</string>
+    <string name="hint_salary">Salary / compensation (optional)</string>
+    <string name="hint_source">Source — where you found it (optional)</string>
+    <string name="hint_contact_name">Contact name (optional)</string>
+    <string name="hint_contact_email">Contact email (optional)</string>
+    <string name="hint_job_description">Job description (optional)</string>
+    <string name="priority_normal">Normal</string>
+    <string name="priority_high">High</string>
+    <string name="priority_top">Top</string>
 </resources>

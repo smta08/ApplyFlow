@@ -45,6 +45,53 @@ public final class DateUtils {
         return fmt(ISO_DATE_TIME).format(c.getTime());
     }
 
+    public static String startOfTodayDateTime() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        return fmt(ISO_DATE_TIME).format(c.getTime());
+    }
+
+    public static String dateTimePlusDaysEndOfDay(int days) {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, days);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
+        return fmt(ISO_DATE_TIME).format(c.getTime());
+    }
+
+    public static String dateMinusDays(int days) {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, -days);
+        return fmt(ISO_DATE).format(c.getTime());
+    }
+
+    public static int daysBetweenDateAndToday(@Nullable String isoDate) {
+        Calendar from = parseDate(isoDate);
+        if (from == null) {
+            return -1;
+        }
+        Calendar today = Calendar.getInstance();
+        long fromDay = atMidnight(from).getTimeInMillis();
+        long todayDay = atMidnight(today).getTimeInMillis();
+        return (int) ((todayDay - fromDay) / (24L * 60L * 60L * 1000L));
+    }
+
+    @Nullable
+    public static String monthKey(@Nullable String isoDate) {
+        Calendar c = parseDate(isoDate);
+        return c == null ? null : new SimpleDateFormat("yyyy-MM", Locale.US).format(c.getTime());
+    }
+
+    private static Calendar atMidnight(Calendar c) {
+        Calendar copy = (Calendar) c.clone();
+        copy.set(Calendar.HOUR_OF_DAY, 0);
+        copy.set(Calendar.MINUTE, 0);
+        copy.set(Calendar.SECOND, 0);
+        copy.set(Calendar.MILLISECOND, 0);
+        return copy;
+    }
+
     @Nullable
     public static Calendar parseDate(@Nullable String iso) {
         if (iso == null || iso.trim().isEmpty()) {
